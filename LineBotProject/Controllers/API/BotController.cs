@@ -45,17 +45,17 @@ namespace LineBotProject.Controllers.API
                         this.ReplyMessage(LineEvent.replyToken, sb.ToString());
                     }
                     
-                    if (LineEvent.message.text == "flex") //收Flex Messages
+                    if (LineEvent.message.text == "我要參加秘密倉庫沙龍") //收Flex Messages
                     {
-                        var flexMsg = ShoppingFlexMessage.Template;
+                        var flexMsg = FlexMessages.SalonTemplate;
                         this.ReplyMessageWithJSON(LineEvent.replyToken, flexMsg);
                     }
 
-                    if (LineEvent.message.text == "text") //收到文字
-                        this.ReplyMessage(LineEvent.replyToken, "你說了:" + LineEvent.message.text);
+                    //if (LineEvent.message.text == "text") //收到文字
+                    //    this.ReplyMessage(LineEvent.replyToken, "你說了:" + LineEvent.message.text);
 
-                    if (LineEvent.message.text == "sticker") //收到貼圖
-                        this.ReplyMessage(LineEvent.replyToken, 1, 2);
+                    //if (LineEvent.message.text == "sticker") //收到貼圖
+                    //    this.ReplyMessage(LineEvent.replyToken, 1, 2);
                 }
             }
             catch (Exception ex)
