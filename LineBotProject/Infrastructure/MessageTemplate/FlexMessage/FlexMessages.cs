@@ -15,7 +15,7 @@ namespace LineBotProject.Infrastructure.MessageTemplate.FlexMessage
 [
     {
       ""type"": ""flex"",
-      ""altText"": ""This is a Flex Message"",
+      ""altText"": ""🎉邀請卡發送🎉"",
       ""contents"": 
 {
   ""type"": ""bubble"",
@@ -37,7 +37,7 @@ namespace LineBotProject.Infrastructure.MessageTemplate.FlexMessage
     ""contents"": [
       {
         ""type"": ""text"",
-        ""text"": ""秘密沙龍"",
+        ""text"": ""秘密沙龍-唇彩不私藏"",
         ""wrap"": true,
         ""weight"": ""bold"",
         ""gravity"": ""center"",
@@ -152,7 +152,7 @@ namespace LineBotProject.Infrastructure.MessageTemplate.FlexMessage
             ""type"": ""button"",
             ""action"": {
               ""type"": ""uri"",
-              ""label"": ""Click Me To Open Map "",
+              ""label"": ""如何前往"",
               ""uri"": ""https://goo.gl/d5PHrJ""
             }
           },
@@ -160,7 +160,7 @@ namespace LineBotProject.Infrastructure.MessageTemplate.FlexMessage
             ""type"": ""button"",
             ""action"": {
               ""type"": ""uri"",
-              ""label"": ""更多訊息"",
+              ""label"": ""更多秘密資訊"",
               ""uri"": ""https://goo.gl/jEnRtM""
             }
           }
