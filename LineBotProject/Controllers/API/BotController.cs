@@ -1,5 +1,8 @@
 ﻿using isRock.LineBot;
 using LineBotProject.Infrastructure.MessageTemplate.FlexMessage;
+using LineBotProject.Infrastructure.MessageTemplate.TextMessage;
+using Service;
+using Service.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,11 +16,13 @@ namespace LineBotProject.Controllers.API
 {
     public class BotController : LineWebHookControllerBase
     {
-        private string UserID = "Your User ID";
+        readonly string UserID = "Your User ID";
+        readonly UserService _UserService;
+        //UserService 
         public BotController()
         {
-            this.ChannelAccessToken = ConfigurationManager.AppSettings["ChannelAccessToken"];
-
+            base.ChannelAccessToken = ConfigurationManager.AppSettings["ChannelAccessToken"];
+            _UserService = new UserService();
         }
         [HttpPost]
         [Route("~/api/bot")]
@@ -30,9 +35,34 @@ namespace LineBotProject.Controllers.API
                 //配合Line verify 
                 if (LineEvent.replyToken == "00000000000000000000000000000000") return Ok();
 
-                if (LineEvent.type == "join")
+                var UserInfo = GetUserInfo(LineEvent.source.userId);
+                if (LineEvent.type == "join" || LineEvent.type == "follow")
                 {
+                    var IsExist = _UserService.GetAll().Any(x => x.UserId == UserInfo.userId);
+                    if (IsExist)
+                    {
+                        _UserService.Update(new UpdateUserParameter()
+                        {
+                            UserId = UserInfo.userId,
+                            Name = UserInfo.displayName,
+                            IsBlocked = false,
+                        });
+                    }
+                    else
+                    {
+                        _UserService.Create(UserInfo.userId, UserInfo.displayName);
+                    }
+                    this.ReplyMessage(LineEvent.replyToken, GreetingTemplete.template);
+                }
 
+                if (LineEvent.type == "unfollow")
+                {
+                    _UserService.Update(new UpdateUserParameter()
+                    {
+                        UserId = UserInfo.userId,
+                        Name = UserInfo.displayName,
+                        IsBlocked = true,
+                    });
                 }
 
                 if (LineEvent.type == "message")
@@ -44,7 +74,14 @@ namespace LineBotProject.Controllers.API
                         sb.AppendLine($"Echo Msg:{LineEvent.message.text}");
                         this.ReplyMessage(LineEvent.replyToken, sb.ToString());
                     }
-                    
+
+                    if (LineEvent.message.text == "驗證")
+                    {
+                        var validateResult = _UserService.Create(UserInfo.userId, UserInfo.displayName);
+
+                        this.ReplyMessage(LineEvent.replyToken, validateResult ? "驗證成功" : "驗證失敗");
+                    }
+
                     if (LineEvent.message.text == "我要參加秘密倉庫沙龍") //收Flex Messages
                     {
                         var flexMsg = FlexMessages.SalonTemplate;
