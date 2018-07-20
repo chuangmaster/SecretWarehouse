@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Repository.Dapper.Models
+namespace Repository.Dapper.Parameters
 {
     /// <summary>
-    /// class UserModel
+    /// class UpdateUserParameter
     /// </summary>
-    public class UserModel
+    public class UpdateUserParameter
     {
         /// <summary>
         /// Line user id
@@ -20,11 +20,6 @@ namespace Repository.Dapper.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// 寫入日期
-        /// </summary>
-        public DateTime DateIn { get; set; }
-
-        /// <summary>
         /// 更新時間
         /// </summary>
         public DateTime UpdateTime { get; set; }
@@ -32,6 +27,6 @@ namespace Repository.Dapper.Models
         /// <summary>
         /// 是否被封鎖
         /// </summary>
-        public bool IsBlocked { get; set; }
+        public bool? IsBlocked { get; set; }
     }
 }

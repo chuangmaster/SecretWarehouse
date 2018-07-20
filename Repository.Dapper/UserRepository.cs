@@ -53,5 +53,46 @@ namespace Repository.Dapper
             }
             return Result;
         }
+
+
+        /// <summary>
+        /// 更新User
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public bool Update(UpdateUserParameter parameter)
+        {
+            if (string.IsNullOrEmpty(parameter.UserId))
+            {
+                throw new Exception("User ID should not be null or empty!");
+            }
+            var Result = false;
+            using (var conn = new SqlConnection(connStr))
+            {
+                DynamicParameters sqlParameters = new DynamicParameters();
+                var sql = new StringBuilder();
+                sql.AppendLine(@"UPDATE [User] SET");
+
+                if (!string.IsNullOrEmpty(parameter.Name))
+                {
+                    sql.AppendLine("Name = @Name, ");
+                    sqlParameters.Add("Name", parameter.Name);
+                }
+
+                if (parameter.IsBlocked.HasValue)
+                {
+                    sql.AppendLine("IsBlocked = @IsBlocked, ");
+                    sqlParameters.Add("IsBlocked",parameter.IsBlocked);
+                }
+
+                sql.AppendLine("UpdateTime = @UpdateTime, ");
+                sqlParameters.Add("UpdateTime", DateTime.UtcNow);
+                sql.AppendLine("WHERE Userid = @Userid, ");
+                sqlParameters.Add("Userid", parameter.UserId);
+
+                Result = conn.Execute(sql.ToString(), sqlParameters) > 0;
+            }
+            return Result;
+        }
     }
 }
