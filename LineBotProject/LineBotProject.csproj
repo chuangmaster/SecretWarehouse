@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Infrastructure\MessageTemplate\FlexMessage\FlexMessages.cs" />
     <Compile Include="Infrastructure\MessageTemplate\FlexMessage\ShoppingFlexMessage.cs" />
+    <Compile Include="Infrastructure\MessageTemplate\TextMessage\GreetingTemplete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +230,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{96AC541F-F58D-46DC-88DD-A192FB446482}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
