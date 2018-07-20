@@ -1,0 +1,58 @@
+﻿using Repository.Dapper;
+using Repository.Dapper.Models;
+using Repository.Dapper.Parameters;
+using Service.DTOs;
+using System;
+using System.Collections.Generic;
+
+namespace Service
+{
+    /// <summary>
+    /// class UserService
+    /// </summary>
+    public class UserService
+    {
+        UserRepository _UserRepository;
+        public UserService()
+        {
+            _UserRepository = new UserRepository();
+        }
+
+        /// <summary>
+        /// 取出所有User
+        /// </summary>
+        /// <returns></returns>
+        public List<UserDTO> GetAll()
+        {
+            var Result = new List<UserDTO>();
+            _UserRepository.GetAll().ForEach(x => Result.Add(ConvertToUserDTO(x)));
+            return Result;
+        }
+
+        /// <summary>
+        /// 新增User
+        /// </summary>
+        /// <returns></returns>
+        public bool Create(string Userid, string Name)
+        {
+            var Result = _UserRepository.Create(new AddUserParameter()
+            {
+                UserId = Userid,
+                Name = Name
+            });
+            return Result;
+        }
+
+        private UserDTO ConvertToUserDTO(UserModel model)
+        {
+            return new UserDTO()
+            {
+                UserId = model.UserId,
+                Name = model.Name,
+                UpdateTime = model.UpdateTime,
+                IsBlocked = model.IsBlocked,
+                DateIn = model.DateIn
+            };
+        }
+    }
+}
