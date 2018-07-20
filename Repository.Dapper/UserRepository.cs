@@ -85,7 +85,7 @@ namespace Repository.Dapper
                     sqlParameters.Add("IsBlocked",parameter.IsBlocked);
                 }
 
-                sql.AppendLine("UpdateTime = @UpdateTime, ");
+                sql.AppendLine("UpdateTime = @UpdateTime ");
                 sqlParameters.Add("UpdateTime", DateTime.UtcNow);
                 sql.AppendLine("WHERE Userid = @Userid, ");
                 sqlParameters.Add("Userid", parameter.UserId);
