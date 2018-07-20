@@ -2,6 +2,7 @@
 using Repository.Dapper.Models;
 using Repository.Dapper.Parameters;
 using Service.DTOs;
+using Service.Parameters;
 using System;
 using System.Collections.Generic;
 
@@ -35,10 +36,25 @@ namespace Service
         /// <returns></returns>
         public bool Create(string Userid, string Name)
         {
-            var Result = _UserRepository.Create(new AddUserParameter()
+            var Result = _UserRepository.Create(new AddUserRptParameter()
             {
                 UserId = Userid,
                 Name = Name
+            });
+            return Result;
+        }
+
+        /// <summary>
+        /// 更新User
+        /// </summary>
+        /// <returns></returns>
+        public bool Update(UpdateUserParameter parameter)
+        {
+            var Result = _UserRepository.Update(new UpdateUserRptParameter()
+            {
+                UserId = parameter.UserId,
+                Name = parameter.Name,
+                IsBlocked = parameter.IsBlocked
             });
             return Result;
         }
