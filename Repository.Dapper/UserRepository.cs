@@ -41,7 +41,7 @@ namespace Repository.Dapper
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public bool Create(AddUserParameter parameter)
+        public bool Create(AddUserRptParameter parameter)
         {
             var Result = false;
             using (var conn = new SqlConnection(connStr))
@@ -60,7 +60,7 @@ namespace Repository.Dapper
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public bool Update(UpdateUserParameter parameter)
+        public bool Update(UpdateUserRptParameter parameter)
         {
             if (string.IsNullOrEmpty(parameter.UserId))
             {

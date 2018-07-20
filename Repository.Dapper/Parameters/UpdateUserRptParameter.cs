@@ -7,7 +7,7 @@ namespace Repository.Dapper.Parameters
     /// <summary>
     /// class UpdateUserParameter
     /// </summary>
-    public class UpdateUserParameter
+    public class UpdateUserRptParameter
     {
         /// <summary>
         /// Line user id
