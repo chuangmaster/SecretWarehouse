@@ -35,23 +35,23 @@ namespace LineBotProject.Controllers.API
                 //配合Line verify 
                 if (LineEvent.replyToken == "00000000000000000000000000000000") return Ok();
 
+
                 var UserInfo = GetUserInfo(LineEvent.source.userId);
+                var IsExist = _UserService.GetAll().Any(x => x.UserId == UserInfo.userId);
+                if (!IsExist)
+                {
+                    _UserService.Create(UserInfo.userId, UserInfo.displayName);
+                }
+
                 if (LineEvent.type == "join" || LineEvent.type == "follow")
                 {
-                    var IsExist = _UserService.GetAll().Any(x => x.UserId == UserInfo.userId);
-                    if (IsExist)
+
+                    _UserService.Update(new UpdateUserParameter()
                     {
-                        _UserService.Update(new UpdateUserParameter()
-                        {
-                            UserId = UserInfo.userId,
-                            Name = UserInfo.displayName,
-                            IsBlocked = false,
-                        });
-                    }
-                    else
-                    {
-                        _UserService.Create(UserInfo.userId, UserInfo.displayName);
-                    }
+                        UserId = UserInfo.userId,
+                        Name = UserInfo.displayName,
+                        IsBlocked = false,
+                    });
                     this.ReplyMessage(LineEvent.replyToken, GreetingTemplete.template);
                 }
 
@@ -73,13 +73,6 @@ namespace LineBotProject.Controllers.API
                         sb.AppendLine($"ID:{LineEvent.source.userId}");
                         sb.AppendLine($"Echo Msg:{LineEvent.message.text}");
                         this.ReplyMessage(LineEvent.replyToken, sb.ToString());
-                    }
-
-                    if (LineEvent.message.text == "驗證")
-                    {
-                        var validateResult = _UserService.Create(UserInfo.userId, UserInfo.displayName);
-
-                        this.ReplyMessage(LineEvent.replyToken, validateResult ? "驗證成功" : "驗證失敗");
                     }
 
                     if (LineEvent.message.text == "我要參加秘密倉庫沙龍") //收Flex Messages
