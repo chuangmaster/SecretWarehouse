@@ -87,7 +87,7 @@ namespace Repository.Dapper
 
                 sql.AppendLine("UpdateTime = @UpdateTime ");
                 sqlParameters.Add("UpdateTime", DateTime.UtcNow);
-                sql.AppendLine("WHERE Userid = @Userid, ");
+                sql.AppendLine("WHERE Userid = @Userid ");
                 sqlParameters.Add("Userid", parameter.UserId);
 
                 Result = conn.Execute(sql.ToString(), sqlParameters) > 0;
