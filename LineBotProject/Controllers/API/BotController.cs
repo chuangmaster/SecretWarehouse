@@ -75,7 +75,7 @@ namespace LineBotProject.Controllers.API
                         this.ReplyMessage(LineEvent.replyToken, sb.ToString());
                     }
 
-                    if (LineEvent.message.text == "我要參加秘密倉庫沙龍") //收Flex Messages
+                    if (LineEvent.message.text == "我要參加秘密沙龍") //收Flex Messages
                     {
                         var flexMsg = FlexMessages.SalonTemplate;
                         this.ReplyMessageWithJSON(LineEvent.replyToken, flexMsg);
