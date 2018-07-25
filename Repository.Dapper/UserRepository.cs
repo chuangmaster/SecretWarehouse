@@ -15,9 +15,9 @@ namespace Repository.Dapper
     public class UserRepository
     {
         string connStr;
-        public UserRepository()
+        public UserRepository(string connectString)
         {
-            connStr = "DB Connect String";
+            connStr = connectString;
         }
 
         /// <summary>

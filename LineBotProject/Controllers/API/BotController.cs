@@ -22,7 +22,7 @@ namespace LineBotProject.Controllers.API
         public BotController()
         {
             base.ChannelAccessToken = ConfigurationManager.AppSettings["ChannelAccessToken"];
-            _UserService = new UserService();
+            _UserService = new UserService(ConfigurationManager.AppSettings["DBConnectionString"]);
         }
         [HttpPost]
         [Route("~/api/bot")]

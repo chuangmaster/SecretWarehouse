@@ -14,9 +14,9 @@ namespace Service
     public class UserService
     {
         UserRepository _UserRepository;
-        public UserService()
+        public UserService(string connectString)
         {
-            _UserRepository = new UserRepository();
+            _UserRepository = new UserRepository(connectString);
         }
 
         /// <summary>
